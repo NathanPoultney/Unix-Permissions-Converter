@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+from permissions_converter import int_to_permissions, permissions_to_int
+
+# Example usage
+if __name__ == "__main__":
+    # Example 1: Integer to permission string
+    perm_num = 755
+    perm_str = int_to_permissions(perm_num)
+    print(f"{perm_num} -> {perm_str}")
+    
+    # Example 2: Permission string to integer
+    perm_str = "rwxr-xr-x"
+    perm_num = permissions_to_int(perm_str)
+    print(f"{perm_str} -> {perm_num}")
+    
+    # Additional examples
+    examples = [644, 777, 600, 444]
+    for ex in examples:
+        perm_str = int_to_permissions(ex)
+        print(f"{ex} -> {perm_str} -> {permissions_to_int(perm_str)}")

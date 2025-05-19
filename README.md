@@ -1,4 +1,4 @@
-# Unix File Permissions Converter
+# Unix Permissions Converter
 
 A simple Python utility that converts Unix file permissions between integer (octal) notation and symbolic (rwx) notation.
 

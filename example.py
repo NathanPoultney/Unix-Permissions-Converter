@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Example usage of the permissions_converter module.
+"""
 
 from permissions_converter import int_to_permissions, permissions_to_int
 
@@ -19,3 +22,22 @@ if __name__ == "__main__":
     for ex in examples:
         perm_str = int_to_permissions(ex)
         print(f"{ex} -> {perm_str} -> {permissions_to_int(perm_str)}")
+    
+    print("\nHandling invalid inputs:")
+    
+    # Invalid permission number
+    invalid_num = 888
+    result = int_to_permissions(invalid_num)
+    print(f"Invalid number {invalid_num} -> {result}")
+    
+    # Invalid permission strings
+    invalid_strings = [
+        "rwa-r--r--", # Contains invalid character
+        "rwxrwxrw",   # Too short
+        "rwxrwxrwxr", # Too long
+        "abcdefghi"   # Invalid characters
+    ]
+    
+    for inv_str in invalid_strings:
+        result = permissions_to_int(inv_str)
+        print(f"Invalid string '{inv_str}' -> {result}")

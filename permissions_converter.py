@@ -8,7 +8,7 @@ octal notation (like 755) and symbolic notation (like rwxr-xr-x).
 
 def int_to_permissions(num):
     """Convert integer permission (e.g. 755) to string format (e.g. rwxr-xr-x)"""
-    if not 0 <= num <= 777:
+    if not isinstance(num, int) or not 0 <= num <= 777:
         return "Invalid permission number"
     
     # Convert to binary, remove '0b' prefix, and ensure it's 9 bits
@@ -23,8 +23,18 @@ def int_to_permissions(num):
 
 def permissions_to_int(perm_string):
     """Convert string permission (e.g. rwxr-xr-x) to integer format (e.g. 755)"""
-    if len(perm_string) != 9:
+    if not isinstance(perm_string, str) or len(perm_string) != 9:
         return "Invalid permission string"
+    
+    # Check if the string follows valid permission patterns
+    for i in range(0, 9):
+        char = perm_string[i]
+        if i % 3 == 0 and char not in ['r', '-']:  # Position 0/3/6: read permission
+            return "Invalid permission string"
+        elif i % 3 == 1 and char not in ['w', '-']:  # Position 1/4/7: write permission
+            return "Invalid permission string"
+        elif i % 3 == 2 and char not in ['x', '-']:  # Position 2/5/8: execute permission
+            return "Invalid permission string"
     
     # Convert permission symbols to binary
     binary = ''
@@ -34,7 +44,7 @@ def permissions_to_int(perm_string):
         elif char == '-':
             binary += '0'
         else:
-            return "Invalid permission string"
+            return "Invalid permission string"  # Redundant but kept for safety
     
     # Convert binary to octal
     octal = ''
